@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const resolvers = {
     Class: {
         type(parent) {
@@ -48,6 +50,11 @@ const resolvers = {
             if(!context.clap.find(item => item.type === args.type)) {
                 context.clap.push(newClass);
             }
+            fs.writeFile('./db.json', JSON.stringify(context.clap), (err) => {
+                if(err) {
+                    console.log(err);
+                }
+            });
             return context.clap;
         },
         delete_class(_, args, context) {
@@ -55,6 +62,11 @@ const resolvers = {
             if(index !== -1) {
                 context.clap.splice(index, 1);
             }
+            fs.writeFile('./db.json', JSON.stringify(context.clap), (err) => {
+                if(err) {
+                    console.log(err);
+                }
+            });
             return context.clap;
         },
         create_homework(_, args, context) {
@@ -68,6 +80,11 @@ const resolvers = {
             if(!context.clap[index].homeworks.find(item => item.id === args.id)) {
                 context.clap[index].homeworks.push(newHomework);
             }
+            fs.writeFile('./db.json', JSON.stringify(context.clap), (err) => {
+                if(err) {
+                    console.log(err);
+                }
+            });
             return context.clap[index];
         },
         addto_homework(_, args, context) {
@@ -79,6 +96,11 @@ const resolvers = {
                 context.clap[which].homeworks[index].finished_people += (finished_people || 0);
                 context.clap[which].homeworks[index].total_time += (total_time || 0);
             }
+            fs.writeFile('./db.json', JSON.stringify(context.clap), (err) => {
+                if(err) {
+                    console.log(err);
+                }
+            });
             return context.clap[which].homeworks[index];
         },
         edit_homework(_, args, context) {
@@ -90,6 +112,11 @@ const resolvers = {
                 context.clap[which].homeworks[index].finished_people = finished_people;
                 context.clap[which].homeworks[index].total_time = total_time;
             }
+            fs.writeFile('./db.json', JSON.stringify(context.clap), (err) => {
+                if(err) {
+                    console.log(err);
+                }
+            });
             return context.clap[which].homeworks[index];
         },
         delete_homework(_, args, context) {
@@ -100,6 +127,11 @@ const resolvers = {
             if(index !== -1) {
                 context.clap[which].homeworks.splice(index, 1);
             }
+            fs.writeFile('./db.json', JSON.stringify(context.clap), (err) => {
+                if(err) {
+                    console.log(err);
+                }
+            });
             return context.clap[which];
         },
     }
